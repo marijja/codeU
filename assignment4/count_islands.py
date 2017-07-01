@@ -8,11 +8,6 @@ class CountIslands():
         self.prev_row_islands = []
         self.new_row_islands = []
         self.counter = 0
-        self._clear_iterators()
-
-    def _clear_iterators(self):
-        self.prev_row_i = 0
-        self.new_row_i = 0
 
     def _create_island(self, tile_num):
         """We either create new set (new island) or extend an existing one.
@@ -45,30 +40,31 @@ class CountIslands():
         if not self.new_row_islands:
             return
 
-        self._clear_iterators()
+        prev_row_i = 0
+        new_row_i = 0
         island_is_new = True
         max_prev = len(self.prev_row_islands)
 
-        while self.new_row_i < len(self.new_row_islands):
-            new_island = self.new_row_islands[self.new_row_i]
-            prev_island = self.prev_row_islands[self.prev_row_i]
+        while new_row_i < len(self.new_row_islands):
+            new_island = self.new_row_islands[new_row_i]
+            prev_island = self.prev_row_islands[prev_row_i]
 
             if not new_island.isdisjoint(prev_island):
                 if not island_is_new: # We delete some excessive islands from previous row (see: testWeirdCase in tests)
                     self.counter -= 1
                 island_is_new = False
-                if max(prev_island) < max(new_island) and self.prev_row_i < max_prev - 1:
-                    self.prev_row_i += 1
+                if max(prev_island) < max(new_island) and prev_row_i < max_prev - 1:
+                    prev_row_i += 1
                 else:
                     island_is_new = True
-                    self.new_row_i += 1
+                    new_row_i += 1
             elif min(prev_island) > max(new_island) or max(prev_island) >= max_prev - 1:
                 if island_is_new:
                     self.counter += 1
                 island_is_new = True
-                self.new_row_i += 1
-            elif self.prev_row_i < max_prev - 1:
-                self.prev_row_i += 1
+                new_row_i += 1
+            elif prev_row_i < max_prev - 1:
+                prev_row_i += 1
 
     def count(self, map):
         """Dynamic approach - traverse the matrix row by row

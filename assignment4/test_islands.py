@@ -4,47 +4,47 @@ from count_islands import CountIslands
 class TestIslands(unittest.TestCase):
 
     def testEmpty(self):
-        map = [[False]*10 for i in range(10)]
+        m = [[False]*10 for i in range(10)]
         counter = CountIslands()
-        self.assertEqual(0, counter.count(map))
+        self.assertEqual(0, counter.count(m))
 
     def testFull(self):
-        map = [[True] * 10 for i in range(10)]
+        m = [[True] * 10 for i in range(10)]
         counter = CountIslands()
-        self.assertEqual(1, counter.count(map))
+        self.assertEqual(1, counter.count(m))
 
     def testDisjoint(self):
-        map = [[True, False],
+        m = [[True, False],
                [False, True]]
 
         counter = CountIslands()
-        self.assertEqual(2, counter.count(map))
+        self.assertEqual(2, counter.count(m))
 
     def testSample(self):
-        map = [[False, True, False, True],
+        m = [[False, True, False, True],
                [True, True, False, False],
                [False, False, True, False],
                [False, False, True, False]]
 
         counter = CountIslands()
-        self.assertEqual(3, counter.count(map))
+        self.assertEqual(3, counter.count(m))
 
     def testWeirdCase(self):
-        map = [[True, False, True, False],
+        m = [[True, False, True, False],
                [True, True, True, False],
                [True, False, True, True],
                [False, True, False, False]]
 
         counter = CountIslands()
-        self.assertEqual(2, counter.count(map))
+        self.assertEqual(2, counter.count(m))
 
     def testSparse(self):
-        map = [[False, False, True],
+        m = [[False, False, True],
                [False, False, False],
                [True, False, False]]
 
         counter = CountIslands()
-        self.assertEqual(2, counter.count(map))
+        self.assertEqual(2, counter.count(m))
 
 
 
