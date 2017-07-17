@@ -22,7 +22,7 @@ class TestAlphabet(unittest.TestCase):
         alphabet = Alphabet()
 
         result = alphabet.get_alphabet(dictionary)
-        self.assertEqual(result, ['A', 'T', 'R', 'C'])
+        self.assertIn(result, (['A', 'T', 'R', 'C'], ['T', 'A', 'R', 'C']))
 
 if __name__ == '__main__':
     unittest.main()
