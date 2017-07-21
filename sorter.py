@@ -13,23 +13,23 @@ class Sorter:
         self.sorted_sequence = sorted_sequence
         self.permutation = permutation
 
-    def _swap_values(self, x_i, y_i):
+    def _swap_values(self, min_value_i, value_i):
         """
-        Swapping values using 0 as buffer
-        :param int x_i: Index of first value to swap
-        :param int y_i: Index of second value to swap
+        Swapping value with min value using 0 as buffer
+        :param int min_value_i: Index of min value to swap
+        :param int value_i: Index of value to swap
         """
-        if x_i == y_i:
+        if min_value_i == value_i:
             return
 
         zero_i = self.permutation.index(0)
 
-        if y_i != zero_i:  # we don't need to swap 0 with 0
-            self.permutation[y_i], self.permutation[zero_i] = self.permutation[zero_i], self.permutation[y_i]
+        if value_i != zero_i:  # we don't need to swap 0 with 0
+            self.permutation[value_i], self.permutation[zero_i] = self.permutation[zero_i], self.permutation[value_i]
             print(self.permutation)
-            y_i, zero_i = zero_i, y_i
+            value_i, zero_i = zero_i, value_i
 
-        self.permutation[x_i], self.permutation[zero_i] = self.permutation[zero_i], self.permutation[x_i]
+        self.permutation[min_value_i], self.permutation[zero_i] = self.permutation[zero_i], self.permutation[min_value_i]
         print(self.permutation)
 
     def _move_zero(self):
