@@ -19,8 +19,11 @@ class Sorter:
         :param int x_i: Index of first value to swap
         :param int y_i: Index of second value to swap
         """
+        if x_i == y_i:
+            return
 
         zero_i = self.permutation.index(0)
+
         if y_i != zero_i:  # we don't need to swap 0 with 0
             self.permutation[y_i], self.permutation[zero_i] = self.permutation[zero_i], self.permutation[y_i]
             print(self.permutation)
@@ -65,7 +68,6 @@ class Sorter:
         for i in range(self.N):
             min_value = self.order.min_omit_zero(self.permutation[i:self.N])
             min_index = self.permutation.index(min_value)
-            if min_index != i:
-                self._swap_values(min_index, i)
+            self._swap_values(min_index, i)
 
         return self._move_zero()
