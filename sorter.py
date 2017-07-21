@@ -14,7 +14,10 @@ class Order:
             new_order.add((sorted_sequence[i], sorted_sequence[i + 1]))
         return new_order
 
-    def _compare(self):
+    def compare(self, value1, value2):
+        pass
+
+    def get_min(self, iterable):
         pass
 
 
@@ -42,43 +45,52 @@ class Sorter:
 
         return empty_slot_i, number_i
 
-    def _insert_zero(self, zero_position, current_permutation):
-        current_permutation.insert(zero_position, 0)
+    def _insert_zero(self, zero_position, permutation):
+        permutation.insert(zero_position, 0)
         i = zero_position
 
-        while i < self.N - 1 and current_permutation[i] > current_permutation[i + 1]:
-            current_permutation[i], current_permutation[i + 1] = current_permutation[i + 1], current_permutation[i]
+        while i < self.N - 1 and permutation[i] > permutation[i + 1]:
+            permutation[i], permutation[i + 1] = permutation[i + 1], permutation[i]
             i += 1
-            print(current_permutation)
+            print(permutation)
 
-        while i > 0 and current_permutation[i] < current_permutation[i - 1]:
-            current_permutation[i], current_permutation[i - 1] = current_permutation[i - 1], current_permutation[i]
+        while i > 0 and permutation[i] < permutation[i - 1]:
+            permutation[i], permutation[i - 1] = permutation[i - 1], permutation[i]
             i -= 1
-            print(current_permutation)
+            print(permutation)
+
+        return permutation
+
+    def _remove_zero(self):
+        empty_slot = self.permutation.index(0)
+        current_permutation = list(self.permutation)
+        current_permutation.remove(0)
+
+        return empty_slot, current_permutation
 
     def sort(self):
         """
         The problem is actually sorting with memory O(1) and given order of elements.
         We use the selection sort, because we don't need to manage the recursive calls in it.
 
-        Positions dictionary keeps the current position of each element
+        We remove the 0 from permutation, sort using it as a buffer and then insert it to the permutation.
         :return:
         """
-        self.positions = dict(zip(self.permutation, range(self.N)))
-        # or we keep empty position separately and sort a list
 
-        empty_slot = self.permutation.index(0)
-        current_permutation = list(self.permutation)
-        current_permutation.remove(0)
+        print(self.permutation)
+        empty_slot, current_permutation = self._remove_zero()
 
         for i in range(self.N):
             try:
-                min_index = min(current_permutation[i:self.N]) # min should be in our ordering - override operators?
+                min_value = min(current_permutation[i:self.N]) # min should be in our ordering - override operators?
+                min_index = current_permutation.index(min_value)
+                if min_index == i:
+                    continue
+                print(f"p {current_permutation} min {min_index} i {i}")
             except ValueError:
                 break
             else:
                 future_min_position, new_i_position = self._move_to_empty_slot(empty_slot, i, current_permutation)
                 empty_slot, new_min_position = self._move_to_empty_slot(future_min_position, min_index, current_permutation)
 
-        self._insert_zero(empty_slot, current_permutation)
-        return current_permutation
+        return self._insert_zero(empty_slot, current_permutation)
