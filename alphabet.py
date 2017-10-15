@@ -24,10 +24,7 @@ class Alphabet:
                 self.relations.add_to_graph(None, letter)
             return
 
-        for i in range(min(len(next_word), len(prev_word))):
-            p = prev_word[i]
-            n = next_word[i]
-
+        for p, n in zip(prev_word, next_word):
             if p != n:
                 self.relations.add_to_graph(p, n)
                 break
